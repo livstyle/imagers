@@ -1,0 +1,26 @@
+{
+  "name": "image-rs",
+  "version": "0.1.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
+    "build-debug": "npm run build --",
+    "build-release": "npm run build -- --release",
+    "build-win32": "cargo-cp-artifact -nc platform/win32_index.node -- cargo build --release --message-format=json-render-diagnostics",
+    "build-linux": "cargo-cp-artifact -nc platform/linux_index.node -- cargo build --release --message-format=json-render-diagnostics",
+    "build-macos": "cargo-cp-artifact -nc platform/macos_index.node -- cargo build --release --message-format=json-render-diagnostics",
+    "install": "npm run build-release",
+    "test": "jest",
+    "jest": "jest"
+  },
+  "author": "livstyle",
+  "license": "MIT",
+  "devDependencies": {
+    "cargo-cp-artifact": "^0.1",
+    "jest": "29.4.1"
+  },
+  "keywords": [
+    "image"
+  ]
+}

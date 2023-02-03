@@ -1,0 +1,71 @@
+name: Rustlings
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'aaa'
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build-linux
+      - name: artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: index.node.linux
+          path: ${{ github.workspace }}/platform/
+
+  job2:
+    runs-on: windows-latest
+    if: github.repository_owner == 'aaa'
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build-win32
+      - name: artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: index.node.windows
+          path: ${{ github.workspace }}/platform/
+
+  job3:
+    runs-on: macos-latest
+    if: github.repository_owner == 'aaa'
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build-macos
+      - name: artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: index.node.macos
+          path: ${{ github.workspace }}/platform/
